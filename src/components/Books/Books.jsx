@@ -1,25 +1,25 @@
-import { useEffect } from "react"
-import { useState } from "react"
-import Book from "../Book/Book"
+import { useEffect } from "react";
+import { useState } from "react";
+import Book from "../Book/Book";
 
 const Books = () => {
-    const [books, setBooks] = useState([])
+  const [books, setBooks] = useState([]);
 
-    useEffect(() => {
-        fetch("./fakedata.json")
-        .then(res => res.json())
-        .then(data => setBooks(data))
-    },[])
+  useEffect(() => {
+    fetch("./fakedata.json")
+      .then((res) => res.json())
+      .then((data) => setBooks(data));
+  }, []);
   return (
-    <div className="container mx-auto my-10 mt-20">
-        <h2 className="text-4xl text-center font-bold my-8">Books</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
-        {
-            books.map(book => <Book key={book.bookId} book={book} /> )
-        }
-        </div>
+    <div className="container mx-auto my-10 mt-14">
+      <h2 className="text-4xl text-center font-bold my-8">Books</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
+        {books.map((book) => (
+          <Book key={book.bookId} book={book} />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Books
+export default Books;
