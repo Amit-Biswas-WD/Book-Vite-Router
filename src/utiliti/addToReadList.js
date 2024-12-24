@@ -20,5 +20,5 @@ const getStoredReadList = () => {
     }
   };
   
-  export { addToStoredReadList };
+  export { addToStoredReadList, getStoredReadList };
   

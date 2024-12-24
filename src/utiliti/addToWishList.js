@@ -20,5 +20,5 @@ const getStoredWishList = () => {
     }
   };
   
-  export { addToStoredWishList };
+  export { addToStoredWishList, getStoredWishList };
   

@@ -7,16 +7,10 @@ const Book = ({ book }) => {
     bookName,
     author,
     image,
-    review,
-    totalPages,
     rating,
-    category,
-    tags,
-    publisher,
-    yearOfPublishing,
   } = book;
   return (
-    <Link to={`/listedBooks/${bookId}`}>
+    <Link to={`/books/${bookId}`}>
       <div className="border-2 rounded-lg p-[24px]">
         <div className="rounded-lg bg-[#F3F3F3] p-10">
           <img

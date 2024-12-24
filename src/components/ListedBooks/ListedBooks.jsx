@@ -1,78 +1,51 @@
-import { useLoaderData, useParams } from "react-router-dom";
-import { addToStoredReadList } from "../../utiliti/addToReadList";
-import { addToStoredWishList } from "../../utiliti/addToWishList";
+import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import { getStoredReadList } from "../../utiliti/addToReadList";
+import { getStoredWishList } from "../../utiliti/addToWishList";
 
 const ListedBooks = () => {
-  const { bookId } = useParams();
-  const id = parseInt(bookId);
-  const data = useLoaderData();
+  const [readList, setReadList] = useState([])
+  const [wishList, setWishList] = useState([])
+  const allBooks = useLoaderData();
 
-  const book = data.find((book) => book.bookId === id);
-  const {
-    bookId: currentBookId,
-    bookName,
-    author,
-    image,
-    review,
-    totalPages,
-    rating,
-    category,
-    tags,
-    publisher,
-    yearOfPublishing,
-  } = book;
+  useEffect(() => {
+    const storedRedList = getStoredReadList();
+    const storedRedListInt = storedRedList.map((id) => parseInt(id));
+    console.log(storedRedList, storedRedListInt, allBooks);
 
-  const handleAsRead = (id) => {
-    addToStoredReadList(id)
-  }
-  const handleAsWishList = (id) => {
-    addToStoredWishList(id)
-  }
+    const readBookList = allBooks.filter(book => storedRedListInt.includes(book.bookId) )
+    setReadList(readBookList)
+  }, []);
 
+
+  useEffect(() => {
+    const storedWishList = getStoredWishList();
+    const storedWishListInt = storedWishList.map((id) => parseInt(id));
+    console.log(storedWishList, storedWishListInt, allBooks);
+
+    const wishBookList = allBooks.filter(book => storedWishList.includes(book.bookId) )
+    setWishList(wishBookList)
+  }, []);
+
+  
   return (
-    <div className="container mx-auto mb-6 grid grid-cols-2 gap-6">
-      <div className="w-full">
-        <img className="w-full h-[564px] bg-cover" src={image} alt="" />
-      </div>
-      <div>
-        <h2 className="text-4xl font-bold">{bookName}</h2>
-        <p className="text-base my-2">By : {author}</p>
-        <hr className="black" />
-        <p className="my-2">Fiction</p>
-        <hr className="black" />
-        <h2 className="my-2 font-semibold">
-          Review: <span className="text-base font-light">{review}</span>
-        </h2>
-        <div className="flex gap-4">
-          <h2 className="font-semibold">Tag : </h2>
-          {tags.map((tag, index) => (
-            <p key={index} className="text-green-500 bg-green-100 p-1 rounded-xl">{tag}</p>
-          ))}
-        </div>
-        <hr className="black my-2" />
-        <div className="w-64">
-          <div className="flex justify-between">
-            <p>Number of Pages:</p>
-            <p className="font-semibold">{totalPages}</p>
-          </div>
-          <div className="flex justify-between my-2">
-            <p>Publisher:</p>
-            <p className="font-semibold">{publisher}</p>
-          </div>
-          <div className="flex justify-between">
-            <p>Year of Publishing:</p>
-            <p className="font-semibold">{yearOfPublishing}</p>
-          </div>
-          <div className="flex justify-between my-2">
-            <p>Rating:</p>
-            <p className="font-semibold">{rating}</p>
-          </div>
-        </div>
-        <div className="flex gap-6">
-          <button onClick={()=> handleAsRead(currentBookId)} className="btn btn-outline btn-accent">Read</button>
-          <button onClick={()=> handleAsWishList(currentBookId)} className="btn btn-success">Wishlist</button>
-        </div>
-      </div>
+    <div className="container mx-auto">
+      <h2 className="text-2xl font-semibold my-4">
+        <Tabs>
+          <TabList>
+            <Tab>Read</Tab>
+            <Tab>Wishlist</Tab>
+          </TabList>
+          <TabPanel>
+            <h2>Read List: {readList.length}</h2>
+          </TabPanel>
+          <TabPanel>
+            <h2>Wish List: {wishList.length}</h2>
+          </TabPanel>
+        </Tabs>
+      </h2>
     </div>
   );
 };
