@@ -29,7 +29,7 @@ const ListedBooks = () => {
     setWishList(wishBookList)
   }, []);
 
-  
+
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-semibold my-4">

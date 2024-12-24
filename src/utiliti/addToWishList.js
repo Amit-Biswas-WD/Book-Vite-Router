@@ -16,7 +16,8 @@ const getStoredWishList = () => {
     } else {
       storedList.push(id);
       const storedListStr = JSON.stringify(storedList);
-      localStorage.setItem("wish-list", storedListStr); 
+      localStorage.setItem("wish-list", storedListStr);
+       alert("asdnfkblafk")
     }
   };
   
